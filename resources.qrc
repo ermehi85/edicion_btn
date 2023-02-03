@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/plugins/edicion_btn" >
+        <file>icon.png</file>
+        <file>img_download.png</file>
+        <file>img_delete.png</file>
+         <file>img_upload.png</file>
+        <file>img_adm_proy.png</file>
+    </qresource>
+</RCC>

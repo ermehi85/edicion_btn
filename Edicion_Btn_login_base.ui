@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CPI_QGISDockWidgetBase</class>
- <widget class="QDockWidget" name="CPI_QGISDockWidgetBase">
+ <class>Edicion_BtnDockWidgetLogin</class>
+ <widget class="QDockWidget" name="Edicion_BtnDockWidgetLogin">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -21,7 +21,7 @@
     <item row="3" column="0">
      <widget class="QLineEdit" name="lineEdit_2">
       <property name="inputMethodHints">
-       <set>Qt::ImhNone</set>
+       <set>Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
       </property>
       <property name="echoMode">
        <enum>QLineEdit::Password</enum>

@@ -74,7 +74,6 @@ class Edicion_Btn:
 
         # Inicializar el directorio principal del PLUGIN
         self.plugin_dir = os.path.dirname(__file__)
-
         # Inicializar al usuario local.
         locale = QSettings().value('locale/userLocale')[0:2]
         locale_path = os.path.join(
@@ -243,7 +242,7 @@ class Edicion_Btn:
         if not self.pluginIsActive:
             self.pluginIsActive = True
 
-            #print "** STARTING Edicion_Btn"
+
 
             # dockwidget may not exist if:
             #    first run of plugin
@@ -298,11 +297,11 @@ class Edicion_Btn:
         self.port = 5432
         self.user_u = self.loginwindow.lineEdit.text()
         self.password_u = self.loginwindow.lineEdit_2.text()
-        self.user = 'postgres'
+        self.user = 'administrador'
         #password codificado de la BBDD con permisos para realizar mas cosas de los que pueden hacer los usuarios editores
-        self.password = "SjIwMjQkYW1w"
+        self.password = "YWRtaW5pc3RyYWRvcg=="
         self.password = base64.b64decode(self.password).decode('utf-8')
-        self.database = "tfg"
+        self.database = "tfg_pruebas"
         self.column_geom_muni = "the_geom"
         self.column_geom = "geometry"
         self.db = QSqlDatabase.addDatabase("QPSQL")
@@ -332,7 +331,7 @@ class Edicion_Btn:
         #Se llama al metodo para conectarse a la BBDD
         self.connectDB()
         #En este caso solo existe una BBDD a la que conectarase
-        listado = ["tfg"]
+        listado = [self.database]
 
         #Generar el entorno gráfico de selección de BBDD
         self.databasewindow = EdicionBtnDockWidgetDatabase()
@@ -539,55 +538,55 @@ class Edicion_Btn:
 
             #Genera los códigos SQL para la descarga de los datos en forma de Query
             if tabla == "query_btn0605l_carretera":
-                sql = "(select * from btn0605l_carretera where ST_INTERSECTS((select the_geom from \"%s\" where \"%s\"  = '%s'), geometry))" % (
+                sql = "(select * from btn0605l_carretera where ST_INTERSECTS((select the_geom from {} where {}  = '{}'), geometry))".format(
                 self.tabla_proy, self.tabla_proy_field, self.project_clave)
-                id_field = "id"
+                id_field = "idprimary"
                 uri.setDataSource("", sql, self.column_geom, "", id_field)
             elif tabla == "query_btn0622l_urbana":
                 sql = "(select * from btn0622l_urbana where ST_INTERSECTS((select the_geom from \"%s\" where \"%s\"  = '%s'), geometry))" % (
                 self.tabla_proy, self.tabla_proy_field, self.project_clave)
-                id_field = "id"
+                id_field = "idprimary"
                 uri.setDataSource("", sql, self.column_geom, "", id_field)
             elif tabla == "query_btn0623l_camino":
                 sql = "(select * from btn0623l_camino where ST_INTERSECTS((select the_geom from \"%s\" where \"%s\"  = '%s'), geometry))" % (
                 self.tabla_proy, self.tabla_proy_field, self.project_clave)
-                id_field = "id"
+                id_field = "idprimary"
                 uri.setDataSource("", sql, self.column_geom, "", id_field)
             elif tabla == "query_btn0626l_senda":
                 sql = "(select * from btn0626l_senda where ST_INTERSECTS((select the_geom from \"%s\" where \"%s\"  = '%s'), geometry))" % (
                     self.tabla_proy, self.tabla_proy_field, self.project_clave)
-                id_field = "id"
+                id_field = "idprimary"
                 uri.setDataSource("", sql, self.column_geom, "", id_field)
             elif tabla == "query_btn0629l_car_bic":
                 sql = "(select * from btn0629l_car_bic where ST_INTERSECTS((select the_geom from \"%s\" where \"%s\"  = '%s'), geometry))" % (
                     self.tabla_proy, self.tabla_proy_field, self.project_clave)
-                id_field = "id"
+                id_field = "idprimary"
                 uri.setDataSource("", sql, self.column_geom, "", id_field)
             elif tabla == "query_btn0632l_itiner":
                 sql = "(select * from btn0632l_itiner where ST_INTERSECTS((select the_geom from \"%s\" where \"%s\"  = '%s'), geometry))" % (
                     self.tabla_proy, self.tabla_proy_field, self.project_clave)
-                id_field = "id"
+                id_field = "idprimary"
                 uri.setDataSource("", sql, self.column_geom, "", id_field)
             elif tabla == "query_btn0635l_via_pec":
                 sql = "(select * from btn0635l_via_pec where ST_INTERSECTS((select the_geom from \"%s\" where \"%s\"  = '%s'), geometry))" % (
                     self.tabla_proy, self.tabla_proy_field, self.project_clave)
-                id_field = "id"
+                id_field = "idprimary"
                 uri.setDataSource("", sql, self.column_geom, "", id_field)
             elif tabla == "query_btn0638l_fc_alt_vel":
                 sql = "(select * from btn0638l_fc_alt_vel where ST_INTERSECTS((select the_geom from \"%s\" where \"%s\"  = '%s'), geometry))" % (
                     self.tabla_proy, self.tabla_proy_field, self.project_clave)
-                id_field = "id"
+                id_field = "idprimary"
                 uri.setDataSource("", sql, self.column_geom, "", id_field)
             elif tabla == "query_btn0641l_fc_conv":
                 sql = "(select * from btn0641l_fc_conv where ST_INTERSECTS((select the_geom from \"%s\" where \"%s\"  = '%s'), geometry))" % (
                     self.tabla_proy, self.tabla_proy_field, self.project_clave)
-                id_field = "id"
+                id_field = "idprimary"
                 uri.setDataSource("", sql, self.column_geom, "", id_field)
             elif tabla == "municipios":
                 sql = "(select * from municipios where ST_INTERSECTS(the_geom,(SELECT st_buffer(the_geom,0.001) "
                 sql += "from \"%s\" where \"%s\" = '%s')))" % (
                 self.tabla_proy, self.tabla_proy_field, self.project_clave)
-                id_field = "id"
+                id_field = "idprimary"
                 uri.setDataSource("", sql, self.column_geom_muni, "", id_field)
 
             else:
@@ -940,7 +939,7 @@ class Edicion_Btn:
         self.db = QSqlDatabase.addDatabase("QPSQL")
         self.db.setHostName(self.hostname)
         self.db.setPort(self.port)
-        self.db.setDatabaseName("tfg")
+        self.db.setDatabaseName(self.database)
         self.db.setUserName(self.user_u)
         self.db.setPassword(self.password_u)
         self.db.open()
@@ -960,7 +959,7 @@ class Edicion_Btn:
         if not self.logged:
             self.login("run_delete_tables")
             return
-        if self.user_u =='postgres':
+        if self.user_u =='administrador':
             self.admin = True
         if not self.admin:
             QMessageBox.warning(self.iface.mainWindow(), "Warning",
@@ -982,7 +981,7 @@ class Edicion_Btn:
             self.connectDB()
             self.deletewindow.comboBox.clear()
             project_list = [" "]
-            sql = "Select table_name FROM information_schema.tables WHERE table_schema = 'proyectos' and table_type = 'BASE TABLE' and ((table_name like '%editor%' or table_name like '%postgres%' ) and table_name not like '%btn%')"
+            sql = "Select table_name FROM information_schema.tables WHERE table_schema = 'proyectos' and table_type = 'BASE TABLE' and ((table_name like '%editor%' or table_name like '%administrador%' ) and table_name not like '%btn%')"
             if not self.admin:
                 sql =  "Select table_name FROM information_schema.tables WHERE table_schema = 'proyectos' and table_type = 'BASE TABLE' and (table_name like '%{}%'  and table_name not like '%btn%')".format(self.user_u)
 
@@ -1413,9 +1412,9 @@ or estad_0508 not in ('01','03')  or fuent_0508 not in ('01','02','03','04','05'
 #Método que comprueba que no existan cruces entre curvas de nivel, es otro ejemplo de comprobar la calidad de la edicion.
     def check_contours(self, window):
         project = self.user_u + "_" + self.loaded_type.lower() + "_" + self.loaded_proyect.lower()
-        sql = """select min(w.id) as id , st_astext(w.geom) from 
+        sql = """select min(w.idprimary) as idprimary , st_astext(w.geom) from 
 
-(select a.id , 
+(select a.idprimary , 
 (st_dump(st_force2d(st_intersection(a.geometry, b.geometry)))).geom as geom from proyectos."{}_btn0201l_cur_niv" as a , 
 proyectos."{}_btn0201l_cur_niv" as b where a.idprimary<>b.idprimary and st_intersects(a.geometry,b.geometry) and a.cota_0201 <> b.cota_0201) as w  group by geom """.format(project,project)
         self.connectDB()
@@ -2506,7 +2505,7 @@ proyectos."{}_btn0201l_cur_niv" as b where a.idprimary<>b.idprimary and st_inter
         if not self.logged:
             self.login("run_admin_project")
             return
-        if self.user_u =='postgres':
+        if self.user_u =='administrador':
             self.admin = True
         if not self.admin:
             QMessageBox.critical(self.iface.mainWindow(), "Error", "Only admin can change project owner")
@@ -2518,7 +2517,7 @@ proyectos."{}_btn0201l_cur_niv" as b where a.idprimary<>b.idprimary and st_inter
         if not self.pluginIsActive:
             self.pluginIsActive = True
             if self.dockwidget3 is None:
-                # Create the dockwidget (after translation) and keep reference
+                # Generar entorno gráfico del cambio de usuario
                 self.dockwidget3 = EdicionBtnDockWidgetOwner()
 
             self.dockwidget3.closingPlugin.connect(self.onClosePlugin)
@@ -2528,7 +2527,7 @@ proyectos."{}_btn0201l_cur_niv" as b where a.idprimary<>b.idprimary and st_inter
             self.connectDB()
             self.dockwidget3.comboBox.clear()
 
-            sql = "Select table_name FROM information_schema.tables WHERE table_schema = 'proyectos' and table_type = 'BASE TABLE' and ((table_name like '%editor%'  or table_name like '%postgres%') and table_name not like '%btn%')  "
+            sql = "Select table_name FROM information_schema.tables WHERE table_schema = 'proyectos' and table_type = 'BASE TABLE' and ((table_name like '%editor%'  or table_name like '%administrador%') and table_name not like '%btn%')  "
 
             query = self.db.exec_(sql)
 
@@ -2572,9 +2571,10 @@ proyectos."{}_btn0201l_cur_niv" as b where a.idprimary<>b.idprimary and st_inter
             nuevo = tabla.replace(owner, new_owner)
 
             sql += "ALTER TABLE \"proyectos\".\"" + tabla + "\" RENAME TO \"" + nuevo + "\";"
-
+            sql1 = "ALTER TABLE \"proyectos\".\"" + nuevo + "\" OWNER  TO \"" + new_owner + "\";"
         if sql != "":
             query = self.db.exec_(sql)
+            query1 = self.db.exec_(sql1)
             self.dockwidget3.close()
 
             if query.lastError().isValid():
